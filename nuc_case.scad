@@ -1,7 +1,23 @@
+//original NUC Case (NUC7i7DNBE) by mraiseris 
+// https://www.thingiverse.com/thing:3706360
+//licensed under the Creative Commons - Attribution license.
+
+//updates by Justin Lowe 20201029
+// https://www.thingiverse.com/thing:4637866
+//objects released under Creative Commons - Attribution license, code under GPLv3
+
+//changes:
+
+//TODO, copy TODOs here as I do them
+
+
+
 T = 0.2;
 
 T2 = T * 2;
 
+//TODO move power button hole, reshape to fit new power button
+//TODO place center foot and solid X-axis support bar like between other feet, iterated bars to create vented bottom
 module bottom(){
     difference(){
         union(){
@@ -19,21 +35,21 @@ module bottom(){
             }
             
             translate([-45.75,-47.5,0]){
-                translate([0,0,0])peg();
-                translate([91.5,0,0])peg();
-                translate([0,95,0])peg();
-                translate([91.5,95,0])peg();
+                translate([0,0,0])standoff();
+                translate([91.5,0,0])standoff();
+                translate([0,95,0])standoff();
+                translate([91.5,95,0])standoff();
             }
             
-            translate([-48.5,-48,0])peg2();
-            translate([48.5,-48,0])peg2();
-            translate([-48.5,48,0])peg2();
-            translate([48.5,48,0])peg2();
+            translate([-48.5,-48,0])foot();
+            translate([48.5,-48,0])foot();
+            translate([-48.5,48,0])foot();
+            translate([48.5,48,0])foot();
             
-            translate([0,-48,0])peg2();
-            translate([-48.5,0,0])peg2();
-            translate([0,48,0])peg2();
-            translate([48.5,0,0])peg2();
+            translate([0,-48,0])foot();
+            translate([-48.5,0,0])foot();
+            translate([0,48,0])foot();
+            translate([48.5,0,0])foot();
             
             translate([-53.5,-53,19])rotate([0,0,45])cube([6,6,34],true);
             translate([-53.5,53,19])rotate([0,0,45])cube([6,6,34],true);
@@ -47,14 +63,14 @@ module bottom(){
     }
 }
 
-module peg(){
+module standoff(){
     difference(){
         cylinder(h=18, d=6, $fn=200);
         translate([0,0,5])cylinder(h=23, d=3, $fn=200);
     }
 }
 
-module peg2(){
+module foot(){
         cylinder(h=3, d=12, $fn=200);
 }
 
@@ -75,6 +91,8 @@ module cornercutout2(){
     }
 }
 
+//TODO realign fan vent, add Y-axis supports in vent
+//extend lip aroudn whole top, chamfer inner edge for more support/adhesion
 module top(){
     translate([0,0,T]){
         difference(){
@@ -134,7 +152,22 @@ module top(){
     }
 }
 
-module powerButton(){
+//TODO change power button to be less stabby
+module powerButtonV2(){
+    union(){
+        //base square, inside case
+        cube();
+        difference(){
+            //button square, through and outside case
+            cube();
+            
+            //power button icon
+        }
+    }
+}
+
+
+module powerButtonV1(){
     union(){
         cylinder(d1=6,d2=0,h=3,$fn=20);
         cylinder(d=2,h=6,$fn=20);
@@ -143,8 +176,9 @@ module powerButton(){
 
 
 
-
-
-powerButton();
+//just because i keep forgetting it is there...
+translate([80,0,0]){
+    powerButtonV1();
+}
 bottom();
 top();

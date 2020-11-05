@@ -18,7 +18,7 @@
 // * made bottom case wall thicker
 // * vents on bottom of case
 // * fixed bottom case corners overlapping and biting off some of standoffs
-// * chamfer long edges inside case lid
+// * chamfer all edges inside case lid (top)
 // * fan vent moved from +6 Y to +4 Y
 
 
@@ -157,11 +157,15 @@ module top(){
                 translate([-54.5+T,6,27.25])cube([2+T2,34-T2,20],true);
                 //lip behind/around front edge
                 translate([-53+T,6,27.25])cube([1,40,20],true);
+                //chamfered lip behind/around front edge
+                translate([-53+T+(2/2)+1,6,33+(3/2)])cube([1+2,40,20-17],true);
 
                 //back edge down into case (over main I/O ports)
                 translate([54.5-T,0,27.25])cube([2+T2,88-T2,20],true);
                 //lip behind/around back edge
                 translate([53-T,0,27.25])cube([1,94,20],true);
+                //chamfered lip behind/around back edge
+                translate([53-T-(1/2)-1,0,33+(4/2)])cube([1+1,94,20-18],true); //i messed up this math somehow but the magic numbers work so i'm done. TODO FIXME... ha.
             }
             
             //round edges of top plane of case
@@ -183,6 +187,20 @@ module top(){
             translate([-50,-(48-T),33]){
                 rotate([0,90,0]){
                     cylinder(100,3,3,$fn=200);
+                }
+            }
+            
+            //chamfer front edge
+            translate([-53+T+(1)/2+3,(48-T),33]){
+                rotate([90,0,0]){
+                    cylinder(95,3,3,$fn=200);
+                }
+            }
+            
+            //chamfer rear edge
+            translate([53-T-(1)/2-2,(48-T),34]){
+                rotate([90,0,0]){
+                    cylinder(95,2,2,$fn=200);
                 }
             }
             

@@ -27,6 +27,7 @@ T = 0.2;
 
 T2 = T * 2;
 
+//entire bottom of case
 module bottom(){
     union(){
         difference(){
@@ -107,6 +108,7 @@ module bottom(){
 
 }
 
+//cylindrical standoffs that circuit board screws into
 module standoff(){
     difference(){
         cylinder(h=18, d=6, $fn=200);
@@ -114,6 +116,7 @@ module standoff(){
     }
 }
 
+//circular feet on bottom of case
 module foot(){
     //change: feet 14 now, were 12
         cylinder(h=3, d=14, $fn=200);
@@ -131,7 +134,7 @@ module roundedCorners(){
     }
 }
 
-//top case rounding
+//rounding for corners of top case
 module cornercutout2(){
     difference(){
         translate([-6,-6,50.5])cube([12,12,98],true);
@@ -140,7 +143,7 @@ module cornercutout2(){
     }
 }
 
-
+//entire top of case
 module top(){
     translate([0,0,T]){
         difference(){ //1st difference
@@ -178,6 +181,7 @@ module top(){
             //change: subtraction cube is now 102 wide instead of 104
             translate([0,0,34])cube([92,96-T2,4],true); //cube is +2 in the X dimension to get rid of "wall" in preview view
             translate([0,0,27.5])cube([92,102-T2,11],true); //cube is +2 in the X dimension to get rid of "wall" in preview view
+            
             //chamfer long edges
             translate([-50,48-T,33]){
                 rotate([0,90,0]){
@@ -219,7 +223,7 @@ module top(){
             
             difference(){ //2nd difference
                 union(){
-                    //make circular fan vent holes on back ed//ge (ZY plane)
+                    //make rectangular/vertical fan vent holes on back edge (ZY plane)
                     translate([54-T,0,35])cube([10,80,2],true);
                     translate([54-T,0,31])cube([10,80,2],true);
                     translate([54-T,0,27])cube([10,80,2],true);

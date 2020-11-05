@@ -19,6 +19,7 @@
 // * vents on bottom of case
 // * fixed bottom case corners overlapping and biting off some of standoffs
 // * chamfer long edges inside case lid
+// * fan vent moved from +6 Y to +4 Y
 
 
 
@@ -198,7 +199,6 @@ module top(){
             //remove material for ethernet and USB ports on back edge
             translate([54-T,6-usbAdjustment/2,13])cube([10,36-usbAdjustment,20],true);
             
-            //TODO realign fan vent
             difference(){ //2nd difference
                 union(){
                     //make circular fan vent holes on back ed//ge (ZY plane)
@@ -216,34 +216,35 @@ module top(){
                 translate([54-T,0,35])cube([30,10,30],true);
             } //end 2nd difference
             
+            //fan vent moved from +6 Y to +4 Y, -20 X to -24 X
             difference(){ //3rd difference
                 union(){
                     difference(){
                         //large outer cylinder to make outer donut that will be removed
-                        translate([-20,6,27.25])cylinder(d=40, h=100, $fn=200);
+                        translate([-24,4,27.25])cylinder(d=40, h=100, $fn=200);
                         //smaller inner cylinder to make outer donut that will be removed
-                        translate([-20,6,27.25])cylinder(d=36, h=100, $fn=200);
+                        translate([-24,4,27.25])cylinder(d=36, h=100, $fn=200);
                     }
                     
                     difference(){
                         //large outer cylinder to make middle donut that will be removed
-                        translate([-20,6,27.25])cylinder(d=32, h=100, $fn=200);
+                        translate([-24,4,27.25])cylinder(d=32, h=100, $fn=200);
                         //smaller inner cylinder to make middle donut that will be removed
-                        translate([-20,6,27.25])cylinder(d=28, h=100, $fn=200);
+                        translate([-24,4,27.25])cylinder(d=28, h=100, $fn=200);
                     }
                     
                     difference(){
                         //large outer cylinder to make inner donut that will be removed
-                        translate([-20,6,27.25])cylinder(d=24, h=100, $fn=200);
+                        translate([-24,4,27.25])cylinder(d=24, h=100, $fn=200);
                         //smaller inner cylinder to make inner donut that will be removed
-                        translate([-20,6,27.25])cylinder(d=20, h=100, $fn=200);
+                        translate([-24,4,27.25])cylinder(d=20, h=100, $fn=200);
                     }
                 }
                 //add X support bar to circular fan vent
-                translate([-20,6,27.25])cube([100,2,100], true);
+                translate([-24,4,27.25])cube([100,2,100], true);
                 //change: add Y support bar
                 //add Y support bar to circular fan vent
-                translate([-20,6,27.25])cube([2,100,100], true);
+                translate([-24,4,27.25])cube([2,100,100], true);
             } //end 3rd difference
         } //end 1st difference
     } //end translate

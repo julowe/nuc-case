@@ -192,8 +192,11 @@ module top(){
             //subtract some thickness of back edge
 //            translate([53-T,0,26])cube([1+T2,86-T2,20],true);
 
+
+            //make back opening 1.5mm smaller only on outer edge next to USB ports
+            usbAdjustment = 1.5;
             //remove material for ethernet and USB ports on back edge
-            translate([54-T,6,13])cube([10,36,20],true);
+            translate([54-T,6-usbAdjustment/2,13])cube([10,36-usbAdjustment,20],true);
             
             //TODO realign fan vent
             difference(){ //2nd difference

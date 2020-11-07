@@ -27,6 +27,8 @@ T = 0.2;
 
 T2 = T * 2;
 
+$fn = 36;
+
 //entire bottom of case
 module bottom(){
     union(){
@@ -52,7 +54,7 @@ module bottom(){
             
             //TODO move power button hole, reshape to fit new power button
             //subtraction for power button hole
-            translate([-57,-31,15])rotate([0,90,0])cylinder(h=10,d=3,$fn=20);
+            translate([-57,-27,15])rotate([0,90,0])cylinder(h=10,d=3,$fn=20);
             
             
         }
@@ -169,6 +171,7 @@ module top(){
                 translate([53-T,0,27.25])cube([1,94,20],true);
                 //chamfered lip behind/around back edge
                 translate([53-T-(1/2)-1,0,33+(4/2)])cube([1+1,94,20-18],true); //i messed up this math somehow but the magic numbers work so i'm done. TODO FIXME... ha.
+                //larger radius would be better, this edge is still a bit flimsy, but fine when all together
             }
             
             //round edges of top plane of case
@@ -207,14 +210,6 @@ module top(){
                     cylinder(95,2,2,$fn=200);
                 }
             }
-            
-            //TODO: don't subtract? pritn and make sure this doesn't interfere with board
-            //subtract some thickness of front edge
-//            translate([-53+T,6,26])cube([1+T2,32-T2,20],true);
-            //TODO: don't subtract? now test print and see if extra material on ZY plane vents make this less flimsy
-            //subtract some thickness of back edge
-//            translate([53-T,0,26])cube([1+T2,86-T2,20],true);
-
 
             //make back opening 1.5mm smaller only on outer edge next to USB ports
             usbAdjustment = 1.5;
@@ -274,18 +269,74 @@ module top(){
 
 //TODO change power button to be less stabby
 module powerButtonV2(){
-    union(){
-        //base square, inside case
-        cube();
-        difference(){
-            //button square, through and outside case
-            cube();
+    //7mm wide back, 5mm wide button
+    difference(){
+        union(){
+            //base square, inside case
+            cube([7,7,3],true);
+            translate([0,0,3]){
+                //button square, through and outside case
+                buttonRounding = 0.5;
+                cube([5-buttonRounding*2,5,4],true);
+                cube([5,5-buttonRounding*2,4],true);
+                translate([5/2-buttonRounding,5/2-buttonRounding,-2]){
+                    cylinder(4,buttonRounding,buttonRounding);
+                }
+                translate([-(5/2-buttonRounding),(5/2-buttonRounding),-2]){
+                    cylinder(4,buttonRounding,buttonRounding);
+                }
+                translate([-(5/2-buttonRounding),-(5/2-buttonRounding),-2]){
+                    cylinder(4,buttonRounding,buttonRounding);
+                }
+                translate([(5/2-buttonRounding),-(5/2-buttonRounding),-2]){
+                    cylinder(4,buttonRounding,buttonRounding);
+                }
+                   
+            }
+        }
+        
+        //power button icon
+        translate([0,0.25,-0.5]){
+            iconAngle = 55;
+            translate([0,0,0]){
+                rotate([0,0,-35]){
+                    rotate_extrude(angle=360-iconAngle*2, convexity = 10){
+                        translate([1.0, 0, 0]){
+                            square([0.5,7]);
+                        }
+                    }
+                }
+            }
             
-            //power button icon
-            //stuff stuff stuff stuff
+            //circle part
+            rotate([0,0,iconAngle]){
+                translate([0,-1.25,0]){
+                    cylinder(7,0.25,0.25);
+                }
+            }
+            rotate([0,0,-iconAngle]){
+                translate([0,-1.25,0]){
+                    cylinder(7,0.25,0.25);
+                }
+            }
+            
+            //line part
+            translate([0,-1.7,0]){
+                cylinder(7,0.25,0.25);
+            }
+            translate([0,-0.2,0]){
+                cylinder(7,0.25,0.25);
+            }
+            translate([-0.25,-1.7,0]){
+                cube([0.5,1.5,7]);
+            }
+
         }
     }
+    
 }
+
+
 
 
 module powerButtonV1(){
@@ -298,11 +349,12 @@ module powerButtonV1(){
 
 
 //just because i keep forgetting it is there...
-//translate([80,0,0]){
+translate([80,0,0]){
 //    powerButtonV1();
-//}
+    powerButtonV2();
+}
 
 //bottom();
-top();
+//top();
 
 

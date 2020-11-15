@@ -2,7 +2,7 @@
 // https://www.thingiverse.com/thing:3706360
 //licensed under the Creative Commons - Attribution license.
 
-//updates by Justin Lowe 20201029
+//updates by Justin Lowe 20201029 for NUC7i3DNB (should be same dimensions as above, but in previous model the power button was not aligned)
 // https://www.thingiverse.com/thing:4637866
 //objects released under Creative Commons - Attribution license, code under GPLv3
 
@@ -16,13 +16,13 @@
 // * added Y support bar to cicrular vent fan on top lid
 // * made edges/lips down from case lid 2 wide instead of 1
 // * made bottom case wall thicker
-// * vents on bottom of case
+// * vents on bottom of case (to offer some protection to components there)
 // * fixed bottom case corners overlapping and biting off some of standoffs
 // * chamfer all edges inside case lid (top)
 // * fan vent moved from +6 Y to +4 Y
 
 
-
+//tolerance for 3d printer - used for spacing between top and bottom of case, and power button and hole
 T = 0.2;
 
 T2 = T * 2;

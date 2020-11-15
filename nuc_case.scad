@@ -27,7 +27,11 @@ T = 0.2;
 
 T2 = T * 2;
 
-$fn = 36;
+renderFNs = 180;
+draftFNs = 36;
+$fn = renderFNs;
+
+
 
 //entire bottom of case
 module bottom(){
@@ -54,7 +58,44 @@ module bottom(){
             
             //TODO move power button hole, reshape to fit new power button
             //subtraction for power button hole
-            translate([-57,-27,15])rotate([0,90,0])cylinder(h=10,d=3,$fn=20);
+//            translate([-57,-27,15])rotate([0,90,0])cylinder(h=10,d=3,$fn=20);
+            
+            
+            //TODO check Z
+            // looks good actually, centered on button... coudl be higher but meh
+
+//TODO check Y
+//19.5 from edge of usb io hole
+//        translate([-xxxx,-47.5,0]){
+//13.5 to 22.5 from standoff
+//measured: -35.0 to -24.0 gap in board, center then 29.5
+//current: -30.5 to -23.5
+//prposed: 32.5 to 26.5
+//END check y
+//
+            translate([-55,-30,15]){
+                rotate([0,-90,0]){
+                    //button square, through and outside case
+                    buttonRounding = 0.5;
+                    buttonSize = 7+T*2;
+                    buttonHeight = 4;
+                    cube([buttonSize-buttonRounding*2,buttonSize,buttonHeight],true);
+                    cube([buttonSize,buttonSize-buttonRounding*2,buttonHeight],true);
+                    translate([buttonSize/2-buttonRounding,buttonSize/2-buttonRounding,-2]){
+                        cylinder(buttonHeight,buttonRounding,buttonRounding);
+                    }
+                    translate([-(buttonSize/2-buttonRounding),(buttonSize/2-buttonRounding),-2]){
+                        cylinder(buttonHeight,buttonRounding,buttonRounding);
+                    }
+                    translate([-(buttonSize/2-buttonRounding),-(buttonSize/2-buttonRounding),-2]){
+                        cylinder(buttonHeight,buttonRounding,buttonRounding);
+                    }
+                    translate([(buttonSize/2-buttonRounding),-(buttonSize/2-buttonRounding),-2]){
+                        cylinder(buttonHeight,buttonRounding,buttonRounding);
+                    }
+                }
+                   
+            }
             
             
         }
@@ -273,36 +314,41 @@ module powerButtonV2(){
     difference(){
         union(){
             //base square, inside case
-            cube([7,7,3],true);
+            cube([9,9,3],true);
             translate([0,0,3]){
                 //button square, through and outside case
                 buttonRounding = 0.5;
-                cube([5-buttonRounding*2,5,4],true);
-                cube([5,5-buttonRounding*2,4],true);
-                translate([5/2-buttonRounding,5/2-buttonRounding,-2]){
-                    cylinder(4,buttonRounding,buttonRounding);
+                buttonSize = 7;
+                buttonHeight = 4;
+                cube([buttonSize-buttonRounding*2,buttonSize,buttonHeight],true);
+                cube([buttonSize,buttonSize-buttonRounding*2,buttonHeight],true);
+                translate([buttonSize/2-buttonRounding,buttonSize/2-buttonRounding,-2]){
+                    cylinder(buttonHeight,buttonRounding,buttonRounding);
                 }
-                translate([-(5/2-buttonRounding),(5/2-buttonRounding),-2]){
-                    cylinder(4,buttonRounding,buttonRounding);
+                translate([-(buttonSize/2-buttonRounding),(buttonSize/2-buttonRounding),-2]){
+                    cylinder(buttonHeight,buttonRounding,buttonRounding);
                 }
-                translate([-(5/2-buttonRounding),-(5/2-buttonRounding),-2]){
-                    cylinder(4,buttonRounding,buttonRounding);
+                translate([-(buttonSize/2-buttonRounding),-(buttonSize/2-buttonRounding),-2]){
+                    cylinder(buttonHeight,buttonRounding,buttonRounding);
                 }
-                translate([(5/2-buttonRounding),-(5/2-buttonRounding),-2]){
-                    cylinder(4,buttonRounding,buttonRounding);
+                translate([(buttonSize/2-buttonRounding),-(buttonSize/2-buttonRounding),-2]){
+                    cylinder(buttonHeight,buttonRounding,buttonRounding);
                 }
                    
             }
         }
         
         //power button icon
-        translate([0,0.25,-0.5]){
+        solidBottom = -1.0; //-1.5 is flush
+        solidTop = -2.5; //-2 is flush
+        iconOffset = solidBottom;
+        translate([0,0.0,iconOffset]){
             iconAngle = 55;
             translate([0,0,0]){
                 rotate([0,0,-35]){
                     rotate_extrude(angle=360-iconAngle*2, convexity = 10){
                         translate([1.0, 0, 0]){
-                            square([0.5,7]);
+                            square([1,7]);
                         }
                     }
                 }
@@ -310,25 +356,25 @@ module powerButtonV2(){
             
             //circle part
             rotate([0,0,iconAngle]){
-                translate([0,-1.25,0]){
-                    cylinder(7,0.25,0.25);
+                translate([0,-1.5,0]){
+                    cylinder(7,0.5,0.5);
                 }
             }
             rotate([0,0,-iconAngle]){
-                translate([0,-1.25,0]){
-                    cylinder(7,0.25,0.25);
+                translate([0,-1.5,0]){
+                    cylinder(7,0.5,0.5);
                 }
             }
             
             //line part
             translate([0,-1.7,0]){
-                cylinder(7,0.25,0.25);
+                cylinder(7,0.35,0.35);
             }
             translate([0,-0.2,0]){
-                cylinder(7,0.25,0.25);
+                cylinder(7,0.35,0.35);
             }
-            translate([-0.25,-1.7,0]){
-                cube([0.5,1.5,7]);
+            translate([-0.35,-1.7,0]){
+                cube([0.7,1.5,7]);
             }
 
         }
@@ -348,13 +394,37 @@ module powerButtonV1(){
 
 
 
-//just because i keep forgetting it is there...
+//translated to the side, just because i keep forgetting it is there...
 translate([80,0,0]){
 //    powerButtonV1();
-    powerButtonV2();
+//    powerButtonV2();
 }
 
-//bottom();
+//diffrence function below is retained so you can print partial test pieces (if you use a different board)
+//difference(){
+bottom();
 //top();
 
-
+//translate([-34,-100,0]){
+//    cube([200,200,50]);
+//}
+//
+//translate([-70,2,0]){
+//    cube([200,200,50]);
+//}
+//translate([-70,-80,20]){
+//    cube([200,200,50]);
+//}
+//
+//}
+//
+//
+//
+//
+//translate([-39,-2,0]){
+//    cube([5,4,3]);
+//}
+//
+//translate([-39,-55,0]){
+//    cube([5,10,3]);
+//}
